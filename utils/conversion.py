@@ -1,6 +1,5 @@
 from collections import deque
 
-# ✅ Infix to Postfix with Step-by-Step Execution
 def infix_to_postfix(expression):
     precedence = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
     stack = []
@@ -39,19 +38,16 @@ def infix_to_postfix(expression):
     return {"result": "".join(output), "steps": steps}
 
 
-# ✅ Infix to Prefix (Using Reverse and Postfix Conversion)
 def infix_to_prefix(expression):
-    expression = expression[::-1]  # Reverse expression
+    expression = expression[::-1]  
     expression = expression.replace('(', 'temp').replace(')', '(').replace('temp', ')')
     
     postfix_result = infix_to_postfix(expression)
-    prefix_result = postfix_result["result"][::-1]  # Reverse again
-    postfix_result["result"] = prefix_result  # Update result
+    prefix_result = postfix_result["result"][::-1]  
+    postfix_result["result"] = prefix_result  
 
-    return postfix_result  # Include steps
+    return postfix_result  
 
-
-# ✅ Postfix to Infix
 def postfix_to_infix(expression):
     stack = []
     steps = []
@@ -79,7 +75,6 @@ def postfix_to_infix(expression):
         return {"result": "Error: Invalid Postfix Expression", "steps": []}
 
 
-# ✅ Prefix to Infix (Fixed Implementation)
 def prefix_to_infix(expression):
     stack = []
     steps = []
@@ -109,16 +104,14 @@ def prefix_to_infix(expression):
         return {"result": "Error: Invalid Prefix Expression", "steps": []}
 
 
-# ✅ Fixed Postfix Evaluation (Now Correct)
 import re
 
 def evaluate_postfix(expression):
     stack = []
-    steps = []  # Track steps for debugging
+    steps = []  
 
-    # ✅ Auto-fix missing spaces & tokenize correctly
-    expression = re.sub(r'(\d)([+\-*/])', r'\1 \2', expression)  # Ensure spaces before operators
-    tokens = re.findall(r'\d+|\S', expression)  # Extract numbers & operators correctly
+    expression = re.sub(r'(\d)([+\-*/])', r'\1 \2', expression) 
+    tokens = re.findall(r'\d+|\S', expression) 
 
     for symbol in tokens:
         if symbol.isdigit():
@@ -139,16 +132,15 @@ def evaluate_postfix(expression):
             elif symbol == "/":
                 if b == 0:
                     return {"result": "Error: Division by Zero", "steps": steps}
-                result = a / b  # Float division
+                result = a / b 
             else:
                 return {"result": "Error: Invalid Operator", "steps": steps}
             
             stack.append(result)
 
-        # ✅ Save step for debugging
         steps.append({
             "symbol": symbol,
-            "stack": list(stack)  # Copy current stack state
+            "stack": list(stack)  
         })
 
     if len(stack) == 1:
@@ -158,10 +150,9 @@ def evaluate_postfix(expression):
 
 
 
-# ✅ Fixed Prefix Evaluation (Now Shows Stack Steps)
 def evaluate_prefix(expression):
     stack = []
-    steps = []  # Track steps for debugging
+    steps = []  
 
     for symbol in reversed(expression):
         if symbol.isdigit():
@@ -180,16 +171,16 @@ def evaluate_prefix(expression):
             elif symbol == "*":
                 result = a * b
             elif symbol == "/":
-                result = a / b  # Float division
+                result = a / b  
             else:
                 return {"result": "Error: Invalid Operator", "steps": steps}
             
             stack.append(result)
 
-        # Save step for debugging
+
         steps.append({
             "symbol": symbol,
-            "stack": list(stack)  # Copy current stack state
+            "stack": list(stack)  
         })
 
     if len(stack) == 1:
@@ -198,7 +189,6 @@ def evaluate_prefix(expression):
         return {"result": "Error: Invalid Prefix Expression", "steps": steps}
 
 
-# ✅ Infix Evaluation (Directly Use Python eval)
 def evaluate_infix(expression):
     try:
         result = eval(expression)
